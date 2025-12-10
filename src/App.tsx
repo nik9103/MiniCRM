@@ -31,7 +31,6 @@ export type Page =
 export default function App() {
   const [currentRole, setCurrentRole] = useState<Role | null>(null);
   const [currentPage, setCurrentPage] = useState<Page>('login');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   
   // State для открытия модальных окон через уведомления
   const [modalToOpen, setModalToOpen] = useState<{
@@ -171,8 +170,6 @@ export default function App() {
           currentRole={currentRole}
           currentPage={currentPage}
           onPageChange={setCurrentPage}
-          isOpen={isSidebarOpen}
-          onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
         />
       )}
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -188,7 +185,11 @@ export default function App() {
             onLogout={handleLogout}
           />
         )}
-        <main className={`flex-1 overflow-y-auto ${!isAuthPage && currentPage === 'profile' ? 'p-0' : !isAuthPage ? 'p-6' : ''}`}>
+        <main
+          className={`flex-1 overflow-y-auto bg-[#F9FAFB] ${
+            !isAuthPage && currentPage === 'profile' ? 'p-0' : !isAuthPage ? 'p-6' : ''
+          }`}
+        >
           <div className={!isAuthPage && currentPage === 'profile' ? 'h-full px-6 pt-6' : ''}>
             {renderPage()}
           </div>

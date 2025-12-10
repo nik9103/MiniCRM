@@ -20,18 +20,7 @@ interface CompetitionsFiltersProps {
 export function CompetitionsFilters({ filters, onFiltersChange, role }: CompetitionsFiltersProps) {
   return (
     <div className="space-y-4">
-      <div className="grid md:grid-cols-4 gap-4">
-        {/* Поиск */}
-        <div className="relative md:col-span-2">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-          <Input
-            placeholder="Поиск по названию..."
-            value={filters.search}
-            onChange={(e) => onFiltersChange({ ...filters, search: e.target.value })}
-            className="pl-9"
-          />
-        </div>
-
+      <div className="flex flex-wrap items-center gap-4">
         {/* Статус */}
         <Select
           value={filters.status}
@@ -39,7 +28,7 @@ export function CompetitionsFilters({ filters, onFiltersChange, role }: Competit
             onFiltersChange({ ...filters, status: value as CompetitionStatus | 'all' })
           }
         >
-          <SelectTrigger>
+          <SelectTrigger className="w-[180px] h-9 rounded-lg bg-[#F3F3F5] border border-transparent text-[14px] text-[#0A0A0A]">
             <SelectValue placeholder="Статус" />
           </SelectTrigger>
           <SelectContent>
@@ -61,7 +50,7 @@ export function CompetitionsFilters({ filters, onFiltersChange, role }: Competit
               })
             }
           >
-            <SelectTrigger>
+            <SelectTrigger className="w-[180px] h-9 rounded-lg bg-[#F3F3F5] border border-transparent text-[14px] text-[#0A0A0A]">
               <SelectValue placeholder="Тип" />
             </SelectTrigger>
             <SelectContent>
@@ -71,11 +60,22 @@ export function CompetitionsFilters({ filters, onFiltersChange, role }: Competit
             </SelectContent>
           </Select>
         )}
+
+        {/* Поиск */}
+        <div className="relative flex-1 min-w-[280px] max-w-[520px] ml-auto">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#99A1AF]" />
+          <Input
+            placeholder="Поиск по названию..."
+            value={filters.search}
+            onChange={(e) => onFiltersChange({ ...filters, search: e.target.value })}
+            className="pl-9 h-9 rounded-lg bg-[#F3F3F5] border border-transparent text-[16px] leading-[19px] text-[#717182] placeholder:text-[#717182] focus-visible:ring-1 focus-visible:ring-[#155DFC] focus-visible:border-transparent"
+          />
+        </div>
       </div>
 
       {/* Диапазон дат */}
-      <div className="flex gap-4 items-center">
-        <span className="text-sm text-gray-600">Период:</span>
+      <div className="flex flex-wrap gap-4 items-center text-sm text-[#4A5565]">
+        <span className="text-[14px] leading-[20px]">Период:</span>
         <Input
           type="date"
           value={filters.dateFrom ? format(filters.dateFrom, 'yyyy-MM-dd') : ''}
@@ -85,9 +85,9 @@ export function CompetitionsFilters({ filters, onFiltersChange, role }: Competit
               dateFrom: e.target.value ? new Date(e.target.value) : null,
             })
           }
-          className="w-[180px]"
+          className="w-[180px] h-9 rounded-lg bg-[#F3F3F5] border border-transparent text-[14px] text-[#0A0A0A] focus-visible:ring-1 focus-visible:ring-[#155DFC] focus-visible:border-transparent"
         />
-        <span className="text-gray-400">—</span>
+        <span className="text-[#99A1AF] text-base">—</span>
         <Input
           type="date"
           value={filters.dateTo ? format(filters.dateTo, 'yyyy-MM-dd') : ''}
@@ -97,12 +97,13 @@ export function CompetitionsFilters({ filters, onFiltersChange, role }: Competit
               dateTo: e.target.value ? new Date(e.target.value) : null,
             })
           }
-          className="w-[180px]"
+          className="w-[180px] h-9 rounded-lg bg-[#F3F3F5] border border-transparent text-[14px] text-[#0A0A0A] focus-visible:ring-1 focus-visible:ring-[#155DFC] focus-visible:border-transparent"
         />
         {(filters.dateFrom || filters.dateTo) && (
           <Button
             variant="ghost"
             size="sm"
+            className="text-[#364153] hover:bg-[#F5F6F7]"
             onClick={() => onFiltersChange({ ...filters, dateFrom: null, dateTo: null })}
           >
             Сбросить даты

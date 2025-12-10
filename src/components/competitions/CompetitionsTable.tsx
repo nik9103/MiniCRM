@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Edit, Trash2, Eye } from 'lucide-react';
+import { Edit, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { Competition, CompetitionStatus } from '../../types/competition';
@@ -14,6 +13,7 @@ import {
 } from '../ui/table';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
+import { cn } from '../../lib/utils';
 
 interface CompetitionsTableProps {
   competitions: Competition[];
@@ -49,28 +49,28 @@ export function CompetitionsTable({
   const getStatusColor = (status: CompetitionStatus) => {
     switch (status) {
       case 'ongoing':
-        return 'bg-green-100 text-green-700 hover:bg-green-100';
+        return 'bg-[#DCFCE7] text-[#008236] hover:bg-[#DCFCE7]';
       case 'planned':
-        return 'bg-blue-100 text-blue-700 hover:bg-blue-100';
+        return 'bg-[#DBEAFE] text-[#1447E6] hover:bg-[#DBEAFE]';
       case 'completed':
-        return 'bg-gray-200 text-gray-700 hover:bg-gray-200';
+        return 'bg-[#E5E7EB] text-[#364153] hover:bg-[#E5E7EB]';
       default:
         return 'bg-gray-100 text-gray-600 hover:bg-gray-100';
     }
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-[10px] border border-[#E5E7EB] overflow-hidden">
       <Table>
         <TableHeader>
-          <TableRow className="bg-gray-50 hover:bg-gray-50">
-            <TableHead className="w-[80px] text-gray-500 uppercase text-xs">ID</TableHead>
-            <TableHead className="text-gray-500 uppercase text-xs">Название</TableHead>
-            <TableHead className="text-gray-500 uppercase text-xs">Дисциплина</TableHead>
-            <TableHead className="text-gray-500 uppercase text-xs">Дата начала</TableHead>
-            <TableHead className="text-gray-500 uppercase text-xs">Дата окончания</TableHead>
-            <TableHead className="text-gray-500 uppercase text-xs">Статус</TableHead>
-            {showActions && <TableHead className="w-[120px] text-gray-500 uppercase text-xs">Действия</TableHead>}
+          <TableRow className="bg-[#F9FAFB] hover:bg-[#F9FAFB] h-10 border-b border-[rgba(0,0,0,0.1)]">
+            <TableHead className="w-[80px] text-[#6A7282] uppercase text-[12px] font-medium">ID</TableHead>
+            <TableHead className="text-[#6A7282] uppercase text-[12px] font-medium">Название</TableHead>
+            <TableHead className="text-[#6A7282] uppercase text-[12px] font-medium">Дисциплина</TableHead>
+            <TableHead className="text-[#6A7282] uppercase text-[12px] font-medium">Дата начала</TableHead>
+            <TableHead className="text-[#6A7282] uppercase text-[12px] font-medium">Дата окончания</TableHead>
+            <TableHead className="text-[#6A7282] uppercase text-[12px] font-medium">Статус</TableHead>
+            {showActions && <TableHead className="w-[120px] text-[#6A7282] uppercase text-[12px] font-medium">Действия</TableHead>}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -84,20 +84,24 @@ export function CompetitionsTable({
             competitions.map((competition) => (
               <TableRow
                 key={competition.id}
-                className="cursor-pointer hover:bg-gray-50 border-b border-gray-100"
+                className="cursor-pointer hover:bg-[#F9FAFB] border-b border-[#F3F4F6] h-[49px]"
                 onClick={() => onView(competition)}
               >
-                <TableCell className="text-blue-600">{competition.id}</TableCell>
-                <TableCell>{competition.officialShortName}</TableCell>
-                <TableCell className="text-gray-600">{competition.discipline}</TableCell>
-                <TableCell className="text-gray-600">
+                <TableCell className="text-[#155DFC] text-[14px] leading-[20px]">{competition.id}</TableCell>
+                <TableCell className="text-[14px] leading-[20px] text-[#0A0A0A]">
+                  {competition.officialShortName}
+                </TableCell>
+                <TableCell className="text-[14px] leading-[20px] text-[#4A5565]">
+                  {competition.discipline}
+                </TableCell>
+                <TableCell className="text-[14px] leading-[20px] text-[#4A5565]">
                   {format(competition.startDate, 'dd.MM.yyyy', { locale: ru })}
                 </TableCell>
-                <TableCell className="text-gray-600">
+                <TableCell className="text-[14px] leading-[20px] text-[#4A5565]">
                   {format(competition.endDate, 'dd.MM.yyyy', { locale: ru })}
                 </TableCell>
                 <TableCell>
-                  <Badge className={getStatusColor(competition.status)}>
+                  <Badge className={cn('rounded-lg px-3 py-1 text-[12px] font-medium', getStatusColor(competition.status))}>
                     {statusLabels[competition.status]}
                   </Badge>
                 </TableCell>

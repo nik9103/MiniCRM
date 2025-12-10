@@ -180,29 +180,33 @@ export function CompetitionsPage({ role = 'athlete', modalToOpen, onModalOpened 
   }, [modalToOpen, competitions]);
 
   return (
-    <div className="space-y-6">
-      {/* Заголовок */}
-      <div>
-        <h1>Соревнования</h1>
-        <p className="text-gray-600 mt-1">
-          {role === 'judge' && 'Соревнования, на которые вы назначены'}
-          {role === 'athlete' && 'Доступные соревнования и ваши заявки'}
-          {canManage && 'Управление всеми соревнованиями в системе'}
-        </p>
-      </div>
+    <div className="space-y-6 max-w-[1030px] mx-auto">
+      {/* Заголовок и CTA в одну линию как на макете */}
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h1 className="text-[24px] leading-[36px] font-medium tracking-[0.00293em] text-[#0A0A0A]">
+            Соревнования
+          </h1>
+          <p className="text-[16px] leading-[24px] tracking-[-0.0195em] text-[#4A5565] mt-1">
+            {role === 'judge' && 'Соревнования, на которые вы назначены'}
+            {role === 'athlete' && 'Доступные соревнования и ваши заявки'}
+            {canManage && 'Управление всеми соревнованиями в системе'}
+          </p>
+        </div>
 
-      {/* Кнопка создания */}
-      {canManage && (
-        <div className="flex justify-end">
-          <Button onClick={handleCreate}>
-            <Plus className="w-4 h-4 mr-2" />
+        {canManage && (
+          <Button
+            onClick={handleCreate}
+            className="h-9 rounded-lg bg-[#030213] text-white hover:bg-[#131127] w-[215px] justify-center gap-2"
+          >
+            <Plus className="w-4 h-4" />
             Создать соревнование
           </Button>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Фильтры */}
-      <Card className="p-6">
+      <Card className="border border-[rgba(0,0,0,0.1)] rounded-[14px] px-6 pb-6 pt-6">
         <CompetitionsFilters
           filters={filters}
           onFiltersChange={(newFilters) => {
